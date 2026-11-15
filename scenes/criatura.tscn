@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://db7puqh753crm"]
+
+[ext_resource type="Script" uid="uid://b04yg47txqw21" path="res://scripts/criatura.gd" id="1_bechy"]
+[ext_resource type="Texture2D" uid="uid://m366icx41qly" path="res://assets/rat.png" id="2_dgh8d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_57w8f"]
+
+[node name="Criatura" type="CharacterBody2D" unique_id=556189823]
+script = ExtResource("1_bechy")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1290889807]
+texture = ExtResource("2_dgh8d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=633214219]
+shape = SubResource("CircleShape2D_57w8f")

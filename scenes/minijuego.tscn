@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dntf4u2723u3b"]
+
+[ext_resource type="Script" uid="uid://blpf0e7aysqpn" path="res://scripts/minijuego.gd" id="1_5isot"]
+[ext_resource type="PackedScene" uid="uid://72t3y84m4y5a" path="res://scenes/red.tscn" id="2_6v1p3"]
+[ext_resource type="PackedScene" uid="uid://c2mnaoautmeye" path="res://scenes/rata.tscn" id="2_w10iv"]
+[ext_resource type="PackedScene" uid="uid://c2pnn3u5lfpvr" path="res://scenes/murcielago.tscn" id="3_q1o3b"]
+[ext_resource type="Texture2D" uid="uid://dy0c1ngae0hlk" path="res://assets/sewers.png" id="6_sex33"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tu8vy"]
+size = Vector2(1150.5, 644)
+
+[node name="Minijuego" type="Node2D" unique_id=124031475]
+script = ExtResource("1_5isot")
+rata_scene = ExtResource("2_w10iv")
+murcielago_scene = ExtResource("3_q1o3b")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=994165485]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=549329662]
+position = Vector2(1867.5355, 797.79065)
+scale = Vector2(3.2331922, 2.4684896)
+texture = ExtResource("6_sex33")
+centered = false
+offset = Vector2(-576, -324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1161375670]
+position = Vector2(577, 321)
+shape = SubResource("RectangleShape2D_tu8vy")
+
+[node name="Red" parent="." unique_id=724137205 instance=ExtResource("2_6v1p3")]
+position = Vector2(555, 328)
+
+[node name="Timer" type="Timer" parent="." unique_id=479403695]
+wait_time = 1.5
+autostart = true

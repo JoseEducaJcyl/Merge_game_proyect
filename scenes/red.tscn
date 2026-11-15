@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://72t3y84m4y5a"]
+
+[ext_resource type="Script" uid="uid://bcbaudecax2bp" path="res://scripts/red.gd" id="1_8flnf"]
+[ext_resource type="Texture2D" uid="uid://dpnq78v47unu5" path="res://assets/net_capture.png" id="2_vskon"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gfuc7"]
+radius = 40.0
+
+[node name="Red" type="Area2D" unique_id=724137205]
+position = Vector2(536, 304)
+script = ExtResource("1_8flnf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1047461833]
+texture = ExtResource("2_vskon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2036995391]
+position = Vector2(37, -64)
+shape = SubResource("CircleShape2D_gfuc7")

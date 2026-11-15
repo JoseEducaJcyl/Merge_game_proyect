@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2ifgq0rwjee1"]
 
-[ext_resource type="Script" uid="uid://c40j4d4c6crqy" path="res://scripts/carta.gd" id="2_rx7pn"]
+[ext_resource type="Script" uid="uid://c40j4d4c6crqy" path="res://scripts/ficha.gd" id="2_rx7pn"]
 
 [node name="Carta" type="TextureRect" unique_id=484531048]
 custom_minimum_size = Vector2(100, 100)

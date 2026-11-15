@@ -1,5 +1,5 @@
 extends Node
-
+var criaturas_capturadas: int = 0 
 # El diccionario de recetas. La clave es la combinación, el valor es el resultado.
 var recetas = {
 	"rata+murcielago": "rata_voladora",

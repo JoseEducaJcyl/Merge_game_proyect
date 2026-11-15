@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c2mnaoautmeye"]
+
+[ext_resource type="Script" uid="uid://gxepb3hqs3ur" path="res://scripts/rata.gd" id="1_765ii"]
+[ext_resource type="Texture2D" uid="uid://m366icx41qly" path="res://assets/rat.png" id="2_l7pos"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_57w8f"]
+radius = 171.35344
+
+[node name="Rata" type="CharacterBody2D" unique_id=556189823]
+script = ExtResource("1_765ii")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1290889807]
+position = Vector2(585, 309)
+texture = ExtResource("2_l7pos")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=633214219]
+position = Vector2(566, 319)
+shape = SubResource("CircleShape2D_57w8f")

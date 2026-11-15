@@ -40,7 +40,7 @@ func _drop_data(_at_position, data):
 	var fila_origen = int((carta_origen.position.y - escena_principal.MARGEN) / escena_principal.TAMANO_CELDA)
 	var celda_origen = Vector2i(col_origen, fila_origen)
 
-	# ¡LA MAGIA! Obtenemos la nueva criatura
+	# Obtenemos la nueva criatura
 	var nuevo_id = Recetas.obtener_resultado(self.id_criatura, data["id"])
 	
 	# Cambiamos esta carta por la nueva criatura

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c2pnn3u5lfpvr"]
+
+[ext_resource type="Script" uid="uid://dbcy1gkcvpe8p" path="res://scripts/murcielago.gd" id="1_b72fc"]
+[ext_resource type="Texture2D" uid="uid://d0txp1d0mxijy" path="res://assets/bat.png" id="2_b72fc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_57w8f"]
+radius = 148.48569
+
+[node name="Murcielago" type="CharacterBody2D" unique_id=556189823 groups=["criatura"]]
+script = ExtResource("1_b72fc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1290889807]
+position = Vector2(581, 301)
+texture = ExtResource("2_b72fc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=633214219]
+position = Vector2(573, 304)
+shape = SubResource("CircleShape2D_57w8f")
