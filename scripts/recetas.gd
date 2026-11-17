@@ -1,11 +1,9 @@
 extends Node
 var criaturas_capturadas: int = 0 
+var tablero_guardado = {}
 # El diccionario de recetas. La clave es la combinación, el valor es el resultado.
 var recetas = {
-	"rata+murcielago": "rata_voladora",
-	"rata+rata": "rata_gigante",
-	"murcielago+murcielago": "murcielago_vampiro",
-	"rata_voladora+rata": "rata_dragon"
+	"rata+murcielago": "rata_voladora"
 	# Aquí puedes añadir todas las que quieras
 }
 

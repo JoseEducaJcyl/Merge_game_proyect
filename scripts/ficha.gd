@@ -1,14 +1,15 @@
 extends TextureRect
 
-var id_criatura: String = "rata" # El ID de la criatura
+var id_criatura: String = "rata"
+var ya_fusionada = false
 
-# 1. Empezar a arrastrar
 func _get_drag_data(_at_position):
 	var preview = TextureRect.new()
-	preview.texture = self.texture
-	preview.size = self.size
-	preview.modulate = self.modulate
-	preview.position = -self.size / 2
+	preview.texture = texture
+	preview.size = size
+	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	preview.position = -size / 2
 	set_drag_preview(preview)
 	
 	return {
@@ -16,49 +17,57 @@ func _get_drag_data(_at_position):
 		"id": id_criatura
 	}
 
-# 2. Aceptar el drop
 func _can_drop_data(_at_position, data):
 	if data is Dictionary and data.has("id"):
-		if data["origen"] == self: return false
-		
-		# Comprobamos en el libro de recetas si se pueden combinar
+		if data["origen"] == self: 
+			return false
+		if ya_fusionada or data["origen"].ya_fusionada:
+			return false
+			
 		var resultado = Recetas.obtener_resultado(self.id_criatura, data["id"])
-		return resultado != "" # Devuelve true solo si hay una receta válida
+		return resultado != "" 
 	return false
 
-# 3. Realizar la combinación
 func _drop_data(_at_position, data):
+	if ya_fusionada:
+		return
+		
 	var carta_origen = data["origen"]
 	var escena_principal = get_parent()
 	
-	# Calculamos las celdas
-	var col_destino = int((position.x - escena_principal.MARGEN) / escena_principal.TAMANO_CELDA)
-	var fila_destino = int((position.y - escena_principal.MARGEN) / escena_principal.TAMANO_CELDA)
-	var celda_destino = Vector2i(col_destino, fila_destino)
+	if not escena_principal or not "BASE_X" in escena_principal:
+		return
 
-	var col_origen = int((carta_origen.position.x - escena_principal.MARGEN) / escena_principal.TAMANO_CELDA)
-	var fila_origen = int((carta_origen.position.y - escena_principal.MARGEN) / escena_principal.TAMANO_CELDA)
+	var col_destino = round((position.x - escena_principal.BASE_X) / escena_principal.ANCHO_CELDA)
+	var fila_destino = round((position.y - escena_principal.BASE_Y) / escena_principal.ALTO_CELDA)
+	var celda_destino = Vector2i(col_destino, fila_destino)
+	
+	var col_origen = round((carta_origen.position.x - escena_principal.BASE_X) / escena_principal.ANCHO_CELDA)
+	var fila_origen = round((carta_origen.position.y - escena_principal.BASE_Y) / escena_principal.ALTO_CELDA)
 	var celda_origen = Vector2i(col_origen, fila_origen)
 
-	# Obtenemos la nueva criatura
+	if celda_destino == celda_origen:
+		return
+		
+	ya_fusionada = true
+	carta_origen.ya_fusionada = true
+	
 	var nuevo_id = Recetas.obtener_resultado(self.id_criatura, data["id"])
 	
-	# Cambiamos esta carta por la nueva criatura
-	self.id_criatura = nuevo_id
-	self.actualizar_visuales()
-	
-	# Efecto de escala al combinar
-	var tween = create_tween()
-	tween.tween_property(self, "scale", scale * 1.3, 0.1)
-	tween.tween_property(self, "scale", scale, 0.1)
-	
-	# Destruimos la carta arrastrada
 	escena_principal.cartas_en_tablero.erase(celda_origen)
 	carta_origen.queue_free()
+	
+	self.id_criatura = nuevo_id
+	self.position = escena_principal.calcular_posicion_celda(celda_destino)
+	self.actualizar_visuales()
+	
+	escena_principal.cartas_en_tablero[celda_destino] = self
+	
+	await get_tree().process_frame
+	if is_instance_valid(self):
+		ya_fusionada = false
 
-# Función para cambiar la imagen y el color
 func actualizar_visuales():
-	# Aquí asignaremos las imágenes cuando las tengas
 	var texturas = {
 		"rata": preload("res://assets/rat.png"),
 		"murcielago": preload("res://assets/bat.png"),
@@ -67,14 +76,10 @@ func actualizar_visuales():
 	
 	if texturas.has(id_criatura):
 		texture = texturas[id_criatura]
-		modulate = Color.WHITE # Para que no se tiña de colores raros
-		# EFECTO DE VIDA: Pequeño rebote
-	# Primero nos aseguramos de que la escala base sea 1
-	scale = Vector2(1.0, 1.0) 
-	
-	# Creamos un Tween para la animación
-	var tween = create_tween().set_loops() # set_loops() hace que se repita infinitamente
-	
-	# Hacemos que se estire un poquito hacia arriba y luego vuelva
-	tween.tween_property(self, "scale", Vector2(1.05, 0.95), 0.5).set_trans(Tween.TRANS_SINE)
-	tween.tween_property(self, "scale", Vector2(0.95, 1.05), 0.5).set_trans(Tween.TRANS_SINE)	
+		modulate = Color.WHITE
+		
+	# Reducimos ligeramente el tamaño (130x90 en vez de 152x107) para que no toquen los bordes negros
+	custom_minimum_size = Vector2(130, 90)
+	size = Vector2(130, 90)
+	expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED

@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://c2ifgq0rwjee1"]
 
+[ext_resource type="Texture2D" uid="uid://c4tyxho0sefx0" path="res://assets/laboratory_color.png" id="2_gfo57"]
 [ext_resource type="Script" uid="uid://c40j4d4c6crqy" path="res://scripts/ficha.gd" id="2_rx7pn"]
 
-[node name="Carta" type="TextureRect" unique_id=484531048]
-custom_minimum_size = Vector2(100, 100)
-offset_right = 128.0
-offset_bottom = 128.0
+[node name="Ficha" type="TextureRect" unique_id=2034127638]
+custom_minimum_size = Vector2(110, 110)
+offset_right = 110.0
+offset_bottom = 110.0
+texture = ExtResource("2_gfo57")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_rx7pn")

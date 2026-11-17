@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://d3pw0w1giv6ka"]
+
+[ext_resource type="Script" uid="uid://lgsa4am2ubfj" path="res://scripts/menu.gd" id="1_vjb58"]
+[ext_resource type="Texture2D" uid="uid://pxsids74urgd" path="res://assets/logo_color.png" id="2_con2f"]
+
+[node name="Menu" type="Control" unique_id=1046463801]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vjb58")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=644087328]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 1155.0
+offset_bottom = 651.0
+
+[node name="Sprite2D" type="Sprite2D" parent="TextureRect" unique_id=2014824528]
+position = Vector2(571.5, 317.75)
+scale = Vector2(3.2535212, 2.461686)
+texture = ExtResource("2_con2f")
+
+[node name="Button" type="Button" parent="." unique_id=166844260]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 554.0
+offset_right = 739.0
+offset_bottom = 620.0
+text = "JUGAR
+"
+icon_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

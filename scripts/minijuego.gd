@@ -8,6 +8,21 @@ const MAX_BICHOS = 7
 func _ready():
 	# Forzamos la conexión del Timer por código (a prueba de fallos)
 	$Timer.timeout.connect(_on_timer_timeout)
+	
+func _on_body_entered(body):
+	if body.is_in_group("criatura"):
+		Recetas.criaturas_capturadas += 1
+		body.queue_free()
+		
+		# Actualizar UI si el label existe
+		var label = get_parent().get_node_or_null("LabelContador")
+		if label:
+			label.text = "Atrapados: " + str(Recetas.criaturas_capturadas)	
+			
+func _on_volver_pressed():
+	# Paramos el timer por si acaso
+	$Timer.stop()
+	get_tree().change_scene_to_file("res://scenes/laboratorio.tscn")			
 
 func _on_timer_timeout():
 	if bichos_generados < MAX_BICHOS:
